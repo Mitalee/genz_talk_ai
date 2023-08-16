@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 
-st.title("Sh-AI-lu")
+st.title(":hatched_chick: Hi, I'm Sh-AI-lu! :hatched_chick:")
 
 # Set OpenAI API key from Streamlit secrets
 #openai.api_key = ""#st.secrets["OPENAI_API_KEY"]
@@ -26,9 +26,9 @@ def get_completion_from_messages(messages, model=st.session_state["openai_model"
         model=model,
         messages=messages,
         temperature=temperature, # this is the degree of randomness of the model's output
-        stream=True,
+        stream=True, #simulate a typing effect
     )
-    print(str(response.choices[0].message))
+    print(str(response))
     return response.choices[0].message["content"]
 
 context = [ {'role':'system', 'content':"""
@@ -77,7 +77,7 @@ if prompt:
         #     ],
         #     stream=True,
         # ):
-        full_response += response.choices[0].delta.get("content", "")
+        full_response += response#.choices[0].delta.get("content", "")
         message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append({"role": "assistant", "content": full_response}) #message will be saved in history for future responses
