@@ -22,13 +22,14 @@ def get_completion(prompt, model=st.session_state["openai_model"]):
     return response.choices[0].message["content"]
 
 def get_completion_from_messages(messages, model=st.session_state["openai_model"], temperature=0):
+    print('messages received: ', messages)
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
         temperature=temperature, # this is the degree of randomness of the model's output
-        stream=True, #simulate a typing effect
+        # stream=True, #simulate a typing effect  - allowing this is giving an error of response returning a generator object
     )
-    print(str(response))
+    print(type(response))
     return response.choices[0].message["content"]
 
 context = [ {'role':'system', 'content':"""
@@ -69,7 +70,7 @@ if prompt:
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
-        response = get_completion_from_messages(st.session_state.messages, temperature=0)
+        response = get_completion_from_messages(st.session_state.messages, temperature=1)
         # for response in openai.ChatCompletion.create(
         #     model=st.session_state["openai_model"],
         #     messages=[
