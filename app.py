@@ -5,7 +5,7 @@ st.title(":hatched_chick: Hi, I'm Sh-AI-lu! :hatched_chick:")
 
 # Set OpenAI API key from Streamlit secrets
 #openai.api_key = ""#st.secrets["OPENAI_API_KEY"]
-openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+openai.api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
 # Set a default model
 if "openai_model" not in st.session_state:
@@ -59,9 +59,10 @@ if prompt:
     # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
-    if not openai_api_key:
+    if not openai.api_key:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
+    
 
 
     # Display assistant response in chat message container
