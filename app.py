@@ -1,11 +1,11 @@
 import streamlit as st
 import openai
 
-st.title(":hatched_chick: Hi, I'm Sh-AI-lu! :hatched_chick:")
+st.title(":hatched_chick: 'Sup! 🌟 :hatched_chick:")
 
 # Set OpenAI API key from Streamlit secrets
-#openai.api_key = ""#st.secrets["OPENAI_API_KEY"]
-openai.api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
 # Set a default model
 if "openai_model" not in st.session_state:
