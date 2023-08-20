@@ -1,11 +1,10 @@
 
 
 # GenZ Talk AI
--readme created with ChatGPT
+- readme created with ChatGPT
 
 Hey there! 👋 Welcome to the GenZ Talk AI repository! This project aims to explore conversations, language, and trends in Gen Z lingo.
 
-Overview here - 
 
 ## Overview
 
@@ -20,23 +19,14 @@ GenZ Talk AI is a fun and creative endeavor to understand and interact using Gen
 ## Getting Started
 
 1. Clone the repository:
-`git clone https://github.com/Mitalee/genz_talk_ai.git`
+`git clone https://github.com/Mitalee/genz_talk_ai.git` 
 `cd genz_talk_ai`
 
-markdown
-Copy code
-
 2. Install dependencies:
-pip install -r requirements.txt
-
-markdown
-Copy code
+`pip install -r requirements.txt`
 
 3. Run the GenZ Talk AI:
-python genz_talk.py
-
-vbnet
-Copy code
+`streamlit run app.py`
 
 ## Contribute
 
