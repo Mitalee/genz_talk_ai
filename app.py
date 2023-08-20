@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 
-st.title(":hatched_chick: 'Sup! 🌟 :hatched_chick:")
+st.title(":hatched_chick: Yo, 'Sup! 🌟 :hatched_chick:")
 
 # Set OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
