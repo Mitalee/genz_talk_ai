@@ -1,7 +1,7 @@
 
 
 # GenZ Talk AI
-- readme created with ChatGPT
+- View the app here - https://genztalkai-mitalee.streamlit.app/
 
 Hey there! 👋 Welcome to the GenZ Talk AI repository! This project aims to explore conversations, language, and trends in Gen Z lingo.
 
