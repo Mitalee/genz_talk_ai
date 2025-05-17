@@ -1,37 +1,44 @@
 import streamlit as st
 import openai
 
-st.title(":hatched_chick: Yo, 'Sup! 🌟 :hatched_chick:")
+# 🎉 Title & Intro
+st.set_page_config(page_title="Chaotic Work Bestie", layout="centered")
+st.title("🪩✨ Chaotic Work Bestie Bot 💅🫠")
+st.subheader("ur genz bff @ work here to slay vibes not deadlines 😎🫶")
 
-# Set OpenAI API key from Streamlit secrets
+# 🎨 Custom CSS for chat bubbles & vibe
+st.markdown("""
+    <style>
+    .stApp {
+        background: linear-gradient(135deg, #fff0f5, #e0f7fa);
+        color: #2b2b2b;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+    .stMarkdown {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .chat-message {
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# 🔐 Set API Key
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-# openai.api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-# Set a default model
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-###### ChatGPT functions and prompt ######
-def get_completion(prompt, model=st.session_state["openai_model"]):
-    messages = [{"role": "user", "content": prompt}]
+# 💬 OpenAI Call Helpers
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=1):
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
+        temperature=temperature,
     )
     return response.choices[0].message["content"]
 
-def get_completion_from_messages(messages, model=st.session_state["openai_model"], temperature=0):
-    print('messages received: ', messages)
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=temperature, # this is the degree of randomness of the model's output
-        # stream=True, #simulate a typing effect  - allowing this is giving an error of response returning a generator object
-    )
-    print(type(response))
-    return response.choices[0].message["content"]
-
+# 🧠 Set context
 context = [ 
     {
         'role': 'system',
@@ -50,47 +57,51 @@ dance references, or joyful distractions. But you’re never rude — just full 
 Never explain your lingo. Just vibe.
 """
     }
-]  # accumulate messages
+]
 
-
-
-# Initialize chat history
+# 🧾 Chat History Setup
 if "messages" not in st.session_state:
-    st.session_state.messages = context.copy() #[]
+    st.session_state.messages = context.copy()
 
-# Display chat messages from history on app rerun
+# 📜 Expandable helper section
+with st.expander("❓ what can u ask me"):
+    st.markdown("""
+    - “what's the vibe today?”
+    - “how do I handle this deadline?”
+    - “should I go to that boring meeting?”
+    - “give me a hype up speech pls”
+    """)
+
+# 📚 Display past messages
 for message in st.session_state.messages[1:]:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        avatar = "👩‍💻" if message["role"] == "user" else "🪩"
+        bubble_color = "#fce4ec" if message["role"] == "user" else "#e0f7fa"
+        st.markdown(
+            f"<div style='background-color:{bubble_color}; padding:10px; border-radius:10px;'>{avatar} {message['content']}</div>",
+            unsafe_allow_html=True
+        )
 
-# Accept user input
-prompt = st.chat_input("What is up?")
+# 📥 Input & Response Logic
+prompt = st.chat_input("what’s the vibe? 🧃")
 if prompt:
-    # Add user message to chat history
+    # User msg
     st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
-    if not openai.api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
-    
 
-
-    # Display assistant response in chat message container
+    # Typing response
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        full_response = ""
+        message_placeholder.markdown("✨ typing like my nails depend on it... 💅▌")
         response = get_completion_from_messages(st.session_state.messages, temperature=1)
-        # for response in openai.ChatCompletion.create(
-        #     model=st.session_state["openai_model"],
-        #     messages=[
-        #         {"role": m["role"], "content": m["content"]}
-        #         for m in st.session_state.messages
-        #     ],
-        #     stream=True,
-        # ):
-        full_response += response#.choices[0].delta.get("content", "")
-        message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response}) #message will be saved in history for future responses
+        message_placeholder.markdown(response)
+
+    # Store bot msg
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+    # 🎈 Fun effects
+    if any(word in response.lower() for word in ["party", "slay", "delulu", "confetti"]):
+        st.balloons()
+    if "delulu" in response.lower():
+        st.snow()
