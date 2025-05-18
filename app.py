@@ -3,8 +3,8 @@ import openai
 
 # 🎉 Title & Intro
 st.set_page_config(page_title="Chaotic Work Bestie", layout="centered")
-st.title("🪩✨ Chaotic Work Bestie Bot 💅🫠")
-st.subheader("ur genz bff @ work here to slay vibes not deadlines 😎🫶")
+st.title("🪩✨ Work Bestie Bot 💅🫠")
+# st.subheader("ur genz bff @ work here to slay vibes not deadlines 😎🫶")
 
 # Set OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
